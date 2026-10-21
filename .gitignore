@@ -1,0 +1,26 @@
+# Secrets: never commit these
+.env
+kaggle.json
+
+# Python cache and virtual environment
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Jupyter / Colab leftovers
+.ipynb_checkpoints/
+
+# Large data files (re-download or regenerate instead)
+data/raw/
+data/processed/
+
+# Model weights and vocab files (large binaries)
+models/*.pt
+models/*.pkl
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,8 @@
+torch
+pandas
+numpy
+scikit-learn
+joblib
+kagglehub
+datasets
+streamlit
