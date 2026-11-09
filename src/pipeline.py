@@ -3,7 +3,8 @@ import joblib
 
 from src.nlp_utils import tokenize
 from src.lstm_fake import FakeBiLSTM, MODEL_PATH as FAKE_MODEL_PATH, VOCAB_PATH as FAKE_VOCAB_PATH, MAX_LEN, DEVICE
-from src.lstm_summarizer import summarize
+from src.lstm_summarizer import summarize as summarize_lstm
+from src.groq_summarizer import summarize_groq
 
 _fake_cache = {}
 
@@ -28,13 +29,24 @@ def predict_fake(text):
     return {"label": label, "confidence": round(conf, 3)}
 
 
-def analyze(article_text, summary_len=60):
+def get_summary(text, method="groq"):
+    if method == "lstm":
+        return summarize_lstm(text), "lstm"
+    try:
+        return summarize_groq(text), "groq"
+    except Exception as e:
+        print(f"Groq failed, using LSTM fallback: {e}")
+        return summarize_lstm(text), "lstm (fallback)"
+
+
+def analyze(article_text, method="groq"):
     if not article_text or len(article_text.strip()) < 50:
-        return {"error": "Article bahut chhota hai, kam se kam 50 characters do."}
+        return {"error": "Article is too short. Give at least 50 characters."}
     fake_result = predict_fake(article_text)
-    summary = summarize(article_text, max_out=summary_len)
+    summary, used = get_summary(article_text, method=method)
     return {
         "label": fake_result["label"],
         "confidence": fake_result["confidence"],
         "summary": summary,
+        "summarizer": used,
     }

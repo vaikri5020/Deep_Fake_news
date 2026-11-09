@@ -22,6 +22,7 @@ class AnalyzeResponse(BaseModel):
     label: str
     confidence: float
     summary: str
+    summarizer: str
 
 
 @asynccontextmanager
@@ -44,6 +45,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.get("/")
+def root():
+    return {"message": "News API is running. See /docs"}
 
 
 @app.get("/health")

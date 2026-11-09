@@ -1,0 +1,6 @@
+venv
+.env
+.git
+data
+news-react-frontend/node_modules
+__pycache__

@@ -1,8 +1,14 @@
-torch
+# torch
+fastapi
+uvicorn
 pandas
 numpy
+pydantic
 scikit-learn
 joblib
-kagglehub
-datasets
-streamlit
+# kagglehub
+# datasets
+# streamlit
+groq
+python-dotenv
+requests
